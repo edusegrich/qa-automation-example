@@ -11,7 +11,8 @@
     "test-ios": "PLATFORM=ios wdio run wdio.local.conf.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "update:pods": "npx pod-install ios",
-    "postinstall": "yarn run update:pods"
+    "postinstall": "yarn run update:pods",
+    "appium": "appium"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
