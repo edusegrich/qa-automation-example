@@ -1,4 +1,4 @@
-class PageObject {
+abstract class PageObject {
 	protected driver: WebdriverIO.Browser;
 
 	constructor(driver: WebdriverIO.Browser) {

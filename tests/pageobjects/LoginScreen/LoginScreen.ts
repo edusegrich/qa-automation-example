@@ -1,3 +1,4 @@
+import { LoginScreenSelectors } from '.';
 import PageObject from '../PageObject';
 
 interface LoginScreenElements {
@@ -21,8 +22,34 @@ class LoginScreen extends PageObject {
 		this.loginButton = elems.loginButton;
 	}
 
-	async static intializeScreenElements(driver: WebdriverIO.Browser) {
-		const title = await driver.$('');
+	static async intializeScreenElements(driver: WebdriverIO.Browser) {
+		const elems: LoginScreenElements = {
+			title: await driver.$(LoginScreenSelectors.title),
+			emailField: await driver.$(LoginScreenSelectors.emailField),
+			passwordField: await driver.$(LoginScreenSelectors.passwordField),
+			loginButton: await driver.$(LoginScreenSelectors.loginButton)
+		};
+
+		return elems;
+	}
+
+	static async build(driver: WebdriverIO.Browser) {
+		const elems = await LoginScreen.intializeScreenElements(driver);
+		return new LoginScreen(driver, elems);
+	}
+
+	private async setEmailField(email: string) {
+		await this.emailField.addValue(email);
+	}
+
+	private async setPasswordField(password: string) {
+		await this.passwordField.addValue(password);
+	}
+
+	async loginAction(email: string, password: string) {
+		await this.setEmailField(email);
+		await this.setPasswordField(password);
+		await this.loginButton.click();
 	}
 }
 
