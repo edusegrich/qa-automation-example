@@ -2,7 +2,7 @@ import { DesiredCapabilities } from '@wdio/types/build/Capabilities';
 
 let _driver: WebdriverIO.Browser;
 
-export const appBundle = `io.span.${process.env.PLATFORM}.installer`;
+export const appBundle = 'com.rnboilerplate';
 const appPath = (browser.capabilities as DesiredCapabilities).app as string;
 
 export const driverSingleton = async () => {

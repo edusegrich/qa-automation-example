@@ -1,4 +1,5 @@
 import { LoginScreenSelectors } from '.';
+import HomeScreen from '../HomeScreen';
 import PageObject from '../PageObject';
 
 interface LoginScreenElements {
@@ -46,10 +47,19 @@ class LoginScreen extends PageObject {
 		await this.passwordField.addValue(password);
 	}
 
+	private async hitIntroKeyboard() {
+		await this.driver.sendKeys(['\uE007']);
+	}
+
 	async loginAction(email: string, password: string) {
 		await this.setEmailField(email);
 		await this.setPasswordField(password);
+		if (process.env.PLATFORM === 'ios') {
+			await this.hitIntroKeyboard();
+		}
 		await this.loginButton.click();
+		const elems = await HomeScreen.initializeScreenElements(this.driver);
+		return new HomeScreen(this.driver, elems);
 	}
 }
 
