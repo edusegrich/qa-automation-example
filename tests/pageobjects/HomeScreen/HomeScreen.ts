@@ -1,5 +1,6 @@
 import { HomeScreenSelectors } from '.';
 import PageObject from '../PageObject';
+import SettingsScreen from '../SettingsScreen';
 
 interface HomeScreenElements {
 	title: WebdriverIO.Element;
@@ -35,6 +36,12 @@ class HomeScreen extends PageObject {
 	static async build(driver: WebdriverIO.Browser) {
 		const elems = await HomeScreen.initializeScreenElements(driver);
 		return new HomeScreen(driver, elems);
+	}
+
+	async settingsAction() {
+		await this.settingsButton.click();
+		const elems = await SettingsScreen.initializeScreenElements(this.driver);
+		return new SettingsScreen(this.driver, elems);
 	}
 }
 

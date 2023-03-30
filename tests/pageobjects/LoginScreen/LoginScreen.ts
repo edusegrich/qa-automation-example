@@ -1,3 +1,4 @@
+import { delay } from '../../utils/utilities';
 import { LoginScreenSelectors } from '.';
 import HomeScreen from '../HomeScreen';
 import PageObject from '../PageObject';
@@ -58,6 +59,9 @@ class LoginScreen extends PageObject {
 			await this.hitIntroKeyboard();
 		}
 		await this.loginButton.click();
+		await delay(2);
+		const errorModal = await this.driver.$(LoginScreenSelectors.errorLoginModal);
+		if (await errorModal.isDisplayed()) return errorModal;
 		const elems = await HomeScreen.initializeScreenElements(this.driver);
 		return new HomeScreen(this.driver, elems);
 	}

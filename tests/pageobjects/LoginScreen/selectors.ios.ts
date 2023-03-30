@@ -3,4 +3,5 @@ export const selectors = {
 	emailField: '-ios class chain:**/XCUIElementTypeTextField',
 	passwordField: '-ios class chain:**/XCUIElementTypeSecureTextField',
 	loginButton: '-ios class chain:**/XCUIElementTypeButton[`label == "󰍂 LOGIN"`]',
+	errorLoginModal: ''
 };

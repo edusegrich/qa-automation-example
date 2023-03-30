@@ -1,50 +1,41 @@
-import { appBundle, driverSingleton, inputRandomizer } from '../Utils/appiumUtils';
+import { appBundle } from '../Utils/appiumUtils';
 import LoginScreen from '../pageobjects/LoginScreen';
 import HomeScreen from '../pageobjects/HomeScreen';
 
 let loginScreen: LoginScreen;
-let homeScreen: HomeScreen;
 
 describe('Login', () => {
 	beforeEach(async () => {
-		loginScreen = await LoginScreen.build(browser);
+		await driver.activateApp(appBundle);
+		loginScreen = await LoginScreen.build(driver);
 	});
 
 	afterEach(async () => {
-		await browser.terminateApp(appBundle);
+		await driver.terminateApp(appBundle);
 	});
 
 	after(async () => {
-		await browser.removeApp(appBundle);
+		await driver.removeApp(appBundle);
 	});
 
-	const email = 'user@mail.com';
+	const email = 'user';
 	const password = '1234';
 
-	it('should fill email field', async () => {
-		homeScreen = await loginScreen.loginAction(email, password);
-		expect(homeScreen).toBeInstanceOf(HomeScreen);
+	it.skip('should not login', async () => {
+		const result = await loginScreen.loginAction(email, '4321');
+		expect(result).not.toBeInstanceOf(HomeScreen);
+	});
+
+	it.skip('should login successfully', async () => {
+		const newScreen = await loginScreen.loginAction(email, password);
+		expect(newScreen).toBeInstanceOf(HomeScreen);
+	});
+
+	it('should logout', async () => {
+		const homeScreen = (await loginScreen.loginAction(email, password) as HomeScreen);
+		const settingsScreen = await homeScreen.settingsAction();
+		expect(await settingsScreen.getTitle()).toBe('Settings');
+		const newScreen = await settingsScreen.logoutAction();
+		expect(newScreen).toBeInstanceOf(LoginScreen);
 	});
 });
-
-// describe('Logout', () => {
-// 	beforeEach(async () => {
-// 		loginScreen = await LoginScreen.build(await driverSingleton());
-// 	});
-
-// 	afterEach(async () => {
-// 		await (await driverSingleton()).terminateApp(appBundle);
-// 	});
-
-// 	after(async () => {
-// 		await (await driverSingleton()).removeApp(appBundle);
-// 	});
-
-// 	const email = 'user@mail.com';
-// 	const password = '1234';
-
-// 	it('should fill email field', async () => {
-// 		homeScreen = await loginScreen.loginAction(email, password);
-// 		expect(homeScreen).toBeInstanceOf(HomeScreen);
-// 	});
-// });

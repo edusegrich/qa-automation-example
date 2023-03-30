@@ -28,7 +28,7 @@ export const config = {
 	},
 	logLevel: 'info',
 	filesToWatch: [
-		'PageObjects/**'
+		'pageobjects/**'
 	],
 	baseUrl: 'http://127.0.0.1',
 	framework: 'mocha',

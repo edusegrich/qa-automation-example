@@ -49,3 +49,9 @@ export const scrollUp = async (driver: WebdriverIO.Browser, y1 = 200, y2 = 1700)
 		]))
 		: await driver.execute('mobile: scroll', { direction: 'up' });
 };
+
+export const delay = (n: number) => {
+	return new Promise(function (resolve) {
+		setTimeout(resolve, n * 1000);
+	});
+};
